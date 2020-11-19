@@ -13,4 +13,5 @@ This paper includes some other parameters that we could potentially use to set u
 This paper focuses on estimating the flexible skills production functions between the ages of 8 and 22. In this paper, socio-emotional skills is separated into two distinct domains. This could be a potential reerence paper if we are about to ocus on cognitive and non-cognitive productivity.\
 --
 5. Life Cycle Wage Growth across Countries by David Lagakos
-This paper concludes that experience-wage profiles are on average twice as steep in rich countries as in poor countries. Not so useful if we are about to use only German dataset. However, it also concludes that more educated workers have steeper earning profiles than less educated workers, which is consistent with most of the literatures. 
+This paper concludes that experience-wage profiles are on average twice as steep in rich countries as in poor countries. Not so useful if we are about to use only German dataset. However, it also concludes that more educated workers have steeper earning profiles than less educated workers, which is consistent with most of the literatures. \
+--
