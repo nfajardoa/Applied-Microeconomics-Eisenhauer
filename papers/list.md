@@ -8,5 +8,5 @@ This paper tries to deal with the argument that "people tend to invest themselve
 --
 3. Earnings Over the Lifecycle: The Mincer Earnings Function and Its Applications by IZA (There are about 100pages)\ 
 This paper includes some other parameters that we could potentially use to set up our model. It discuss how earning pattens may differ between genders, races or even married and single. The earnings function which this paper cites is the classical one. It follows that the conclusion is also consistent with the findings in some other literatures, i.e. men tend to earn more than women and earning patterns follows a diminishing returns structure. The paper also claims that earning patterns are different between those who work continuously and discoutinuously.\
---\
+--
 test
