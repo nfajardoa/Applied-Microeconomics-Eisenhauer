@@ -30,4 +30,7 @@ Uses SOEP data to see how people predict their future well-being after major lif
 9. Heterogeneous Returns to Personality – The Role of Occupational Choice by John and Thomsen (2012)\
 Also uses SOEP data (1992-2009) to analyze the role of personality in occupational choices and wages. 1. To what extent does personality explain sorting into occupations, 2. Do differences in personality lead to wage differentials within occupations (less relevant to us). For personality (non-cognitive skills) they use 7 measures: reciprocity, locus of control, and big five personality traits. For cognitive skills they use the occupational groups (distinct w.r.t. education and tasks) and assume everyone in the same occupatioanl group has the same cognitive skills. They find that occupational sorting is influenced by all non-cognitive skills, they also confirm the hypothesis of a different valuation of non-cognitive skills across occupations. I think it's a pretty relevant paper to our study, especially the "first" part.\
 --
-10.
+10. Risky Business – The Role of Individual Risk Attitudes in Occupational Choice by Isphording (2010)\
+Analyzes relationship of individual risk attitudes and occupational sorting w.r.t. occupational earnings risk (also with SOEP data). However, the significant relationship in cross-sectional analyses vanishes when controlling for unobserved heterogeneity. The results seem to be driven by correlation of unobserved ability and willingness to take risks. Take-away: importance of controlling for unobserved heterogeneity and instability of attitudes when examing the effects of personality traits in labor market decisions.\
+--
+
