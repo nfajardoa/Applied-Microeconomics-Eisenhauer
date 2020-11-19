@@ -15,3 +15,6 @@ This paper focuses on estimating the flexible skills production functions betwee
 5. Life Cycle Wage Growth across Countries by David Lagakos
 This paper concludes that experience-wage profiles are on average twice as steep in rich countries as in poor countries. Not so useful if we are about to use only German dataset. However, it also concludes that more educated workers have steeper earning profiles than less educated workers, which is consistent with most of the literatures. \
 --
+6. THE EFFECTS OF COGNITIVE AND NONCOGNITIVE ABILITIES ON LABOR MARKET OUTCOMES AND SOCIAL BEHAVIOR by James J. Heckman\
+The paper introduces a new method to analyze the effects of cognitive and non-cognitive stills on wages, employment, schooling and behavioral outcomes. It shows that a model with one latent cognitive skill and one latent noncognitive skill explains a large array of diverse behaviors. Especially, there are also differences between genders in the effects of the skills. A very important argument of this paper is that, non-cognitive ability is as important, if not more important, than cognitive ability. This finding somehow contradicts the traditional view of most of the psychology literatures.\
+--
