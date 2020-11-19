@@ -27,4 +27,7 @@ JORAN'S PART
 8. (MIS-)PREDICTED SUBJECTIVE WELL-BEING FOLLOWING LIFE EVENTS by Odermatt and Stutzer (2019)\
 Uses SOEP data to see how people predict their future well-being after major life events (widowhood, unemployment, disability, marriage, separation, divorce). Actual topic at hand not really related to our research. Only take-away for us might be that people view their current and also five-year future utility exaggerated, so we might have to control for people experiencing these major life events in HS/college (e.g. if one experiences the death of a loved one in college they might drop out and not pursue their actual planned career path).\
 --
-9. 
+9. Heterogeneous Returns to Personality – The Role of Occupational Choice by John and Thomsen (2012)\
+Also uses SOEP data (1992-2009) to analyze the role of personality in occupational choices and wages. 1. To what extent does personality explain sorting into occupations, 2. Do differences in personality lead to wage differentials within occupations (less relevant to us). For personality (non-cognitive skills) they use 7 measures: reciprocity, locus of control, and big five personality traits. For cognitive skills they use the occupational groups (distinct w.r.t. education and tasks) and assume everyone in the same occupatioanl group has the same cognitive skills. They find that occupational sorting is influenced by all non-cognitive skills, they also confirm the hypothesis of a different valuation of non-cognitive skills across occupations. I think it's a pretty relevant paper to our study, especially the "first" part.\
+--
+10.
