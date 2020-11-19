@@ -20,9 +20,11 @@ The paper introduces a new method to analyze the effects of cognitive and non-co
 --
 7. ESTIMATING MARGINAL RETURNS TO EDUCATION by James J. Heckman\
 This paper focuses on analyzing the effect of marginal policy change on the returns of schooling(college). It argues that the marginal return for going to college is not the same between individuals. The data suggests that self-selection on gains is an empirically important phenomenon governing schooling choices. It claims also that there is diminishing returns to education for additional students.\
+
 --
 JORAN'S PART
 --
 8. (MIS-)PREDICTED SUBJECTIVE WELL-BEING FOLLOWING LIFE EVENTS by Odermatt and Stutzer (2019)\
 Uses SOEP data to see how people predict their future well-being after major life events (widowhood, unemployment, disability, marriage, separation, divorce). Actual topic at hand not really related to our research. Only take-away for us might be that people view their current and also five-year future utility exaggerated, so we might have to control for people experiencing these major life events in HS/college (e.g. if one experiences the death of a loved one in college they might drop out and not pursue their actual planned career path).\
 --
+9. 
