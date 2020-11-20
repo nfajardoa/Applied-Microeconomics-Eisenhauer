@@ -36,4 +36,5 @@ Analyzes relationship of individual risk attitudes and occupational sorting w.r.
 11. Occupational Choice Across Generations by Zimmermann (2003)\
 Paper from IZA, specificially focuses on intergenerational occ. choices, also based on SOEP data. Gender and education determine job ranking.\
 --
-12. 
+12. Income comparisons and non-cognitive skills by Budria and Ferrer-i-Carbonell (2012)\
+Mostly useful I guess for the non-cognitive skill definition. They find that people who are more neurotic, extravert and have low external locus of ocntrol and low negative reciprocity are more sensitvie to their individual position in the economic ladder -> might also be a explanation for some part of the occupational choice!\ 
