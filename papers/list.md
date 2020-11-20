@@ -33,4 +33,7 @@ Also uses SOEP data (1992-2009) to analyze the role of personality in occupation
 10. Risky Business – The Role of Individual Risk Attitudes in Occupational Choice by Isphording (2010)\
 Analyzes relationship of individual risk attitudes and occupational sorting w.r.t. occupational earnings risk (also with SOEP data). However, the significant relationship in cross-sectional analyses vanishes when controlling for unobserved heterogeneity. The results seem to be driven by correlation of unobserved ability and willingness to take risks. Take-away: importance of controlling for unobserved heterogeneity and instability of attitudes when examing the effects of personality traits in labor market decisions.\
 --
-
+11. Occupational Choice Across Generations by Zimmermann (2003)\
+Paper from IZA, specificially focuses on intergenerational occ. choices, also based on SOEP data. Gender and education determine job ranking.\
+--
+12. 
