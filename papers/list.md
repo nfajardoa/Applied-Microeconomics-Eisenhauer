@@ -38,3 +38,20 @@ Paper from IZA, specificially focuses on intergenerational occ. choices, also ba
 --
 12. Income comparisons and non-cognitive skills by Budria and Ferrer-i-Carbonell (2012)\
 Mostly useful I guess for the non-cognitive skill definition. They find that people who are more neurotic, extravert and have low external locus of ocntrol and low negative reciprocity are more sensitvie to their individual position in the economic ladder -> might also be a explanation for some part of the occupational choice!\ 
+
+PAPERS CITING KEANE AND WOLPHIN (1997)
+--
+
+1. Empirical applications of discrete choice dynamic programming models, Keane and Wolphin (2009). Review of Economic Dynamics. https://doi.org/10.1016/j.red.2008.07.001
+
+2. Dynamic Discrete Choice Structural Models: A Survey, Aguirregabiria and Mira (2010). Journal of Econometrics. http://dx.doi.org/10.2139/ssrn.1004738 
+
+3. Using a likelihood perspective to sharpen econometric discourse: Three examples, Sims (2000). Journal of Econometrics. 
+
+4. Micro Data, Heterogeneity, and the Evaluation of Public Policy: Nobel Lecture, Heckman (2001). Journal of Political Economy. https://doi.org/10.1086/322086
+
+5. Sufficient Statistics for Welfare Analysis: A Bridge Between Structural and Reduced-Form Methods, Chetty (2009). Annual Review of Economics. https://doi.org/10.1146/annurev.economics.050708.142910
+
+6. Microeconometrics: Current Methods and Some Recent Developments, Cameron (2009). Palgrave Handbook of Econometrics. 
+
+7. Identifying Dynamic Discrete Decision Processes, Magnac and Thesmar (2003). Econometrica. https://doi.org/10.1111/1468-0262.00306
