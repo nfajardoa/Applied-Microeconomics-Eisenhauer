@@ -39,7 +39,7 @@ Paper from IZA, specificially focuses on intergenerational occ. choices, also ba
 12. Income comparisons and non-cognitive skills by Budria and Ferrer-i-Carbonell (2012)\
 Mostly useful I guess for the non-cognitive skill definition. They find that people who are more neurotic, extravert and have low external locus of ocntrol and low negative reciprocity are more sensitvie to their individual position in the economic ladder -> might also be a explanation for some part of the occupational choice!\ 
 
-PAPERS CITING KEANE AND WOLPHIN (1997)
+PAPERS CITING KEANE AND WOLPHIN (1997) -- STRUCTURAL MODELLING REVISITED
 --
 
 1. Empirical applications of discrete choice dynamic programming models, Keane and Wolphin (2009). Review of Economic Dynamics. https://doi.org/10.1016/j.red.2008.07.001
@@ -55,3 +55,38 @@ PAPERS CITING KEANE AND WOLPHIN (1997)
 6. Microeconometrics: Current Methods and Some Recent Developments, Cameron (2009). Palgrave Handbook of Econometrics. 
 
 7. Identifying Dynamic Discrete Decision Processes, Magnac and Thesmar (2003). Econometrica. https://doi.org/10.1111/1468-0262.00306
+
+8. MEASUREMENT WITHOUT THEORY, ONCE AGAIN, Greenwood, J., Seshadri, A., & Vandenbroucke, G. (2015). Journal of Demographic Economics, 81(3), 317-329. doi:10.1017/dem.2015.9
+
+9. Reconciling Micro and Macro Labor Supply Elasticities: A Structural Perspective, Keane and Rogerson (2015). Annual Review of Economics. https://www.annualreviews.org/doi/10.1146/annurev-economics-080614-115601
+
+10. The Use of Structural Models in Econometrics, Low and Meghir (2017) Journal of Economic Perspectives. https://www.aeaweb.org/articles?id=10.1257/jep.31.2.33
+
+11. Comparing IV with structural models: What simple IV can and cannot identify, Heckman and Urzúa (2010) Journal of Econometrics. https://doi.org/10.1016/j.jeconom.2009.09.006
+
+12. Structural vs. atheoretic approaches to econometrics. Keane (2010) Journal of Econometrics. https://doi.org/10.1016/j.jeconom.2009.09.003
+
+13. Semiparametric information bound of dynamic discrete choice models. Buchinskya, Hahna and Kimb (2010) Economics Letters. https://doi.org/10.1016/j.econlet.2010.04.020
+
+14. The Structural Estimation of Behavioral Models: Discrete Choice Dynamic Programming Methods and Applications, Keane, Todd, Wolpin (2011) Handbook of Labor Economics. Volume 4, Part A. https://doi.org/10.1016/S0169-7218(11)00410-2.
+
+15. Decomposition Methods in Economics, Fortin, Lemieux and Firpo (2011) Handbook of Labor Economics. Volume 4, Part A. https://doi.org/10.1016/S0169-7218(11)00407-2
+
+16. Practical Methods for Estimation of Dynamic Discrete Choice Models, Arcidiacono and Ellickson (2011) Annual Review of Economics. https://www.annualreviews.org/doi/10.1146/annurev-economics-111809-125038
+
+17. The Limits of Inference with Theory: A Review of Wolpin (2013), Rust (2014). Journal of Economic Literature. 
+
+18.  Duality in Dynamic Discrete Choice Models (2015). Chiong, Galichon and Shum. Econometrica http://dx.doi.org/10.2139/ssrn.2700773 
+
+19. Micro Data, Heterogeneity and the Evaluation of Public Policy (2005) Heckman. The American Economist https://doi.org/10.1177/056943450504900102
+
+20. 
+
+PAPERS CITING KEANE AND WOLPHIN (1997) -- EMPIRICAL DISCUSSIONS
+--
+
+1. The European crisis and migration to Germany, Bertoli, Brücker, Fernández-Huertas Moraga (2016) Regional Science and Urban Economics. https://doi.org/10.1016/j.regsciurbeco.2016.06.012.
+
+2. Two Questions about European Unemployment (2008) Ljungqvist and Sargent. Econometrica https://doi.org/10.1111/j.0012-9682.2008.00816.x
+
+3. The Race Between Demand and Supply: Tinbergen’s Pioneering Studies of Earnings Inequality, Heckman (2019) De Economist.
