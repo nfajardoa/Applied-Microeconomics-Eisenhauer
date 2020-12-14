@@ -1,0 +1,190 @@
+﻿value,readable_names,group
+-8,Version of questionnaire with modified filtering,invalid
+-6,Version of questionnaire with modified filtering,invalid
+-5,Not included in this version of the questionnaire,invalid
+-4,Inadmissible multiple response,invalid
+-3,Answer improbable,invalid
+-2,Does not apply,Does not apply
+-1,No Answer,invalid
+1,Germany,Germany
+2,Turkey,Turkey
+3,Ex-Yugoslavia,Former Yugo
+4,Greece,Greece
+5,Italy,Italy
+6,Spain,Spain
+7,Ex-GDR (only as country of origin),Ex-GDR (only as country of origin)
+10,Austria,EU
+11,France,EU
+12,Benelux,EU
+13,Denmark,EU
+14,Great Britain,EU
+15,Sweden,EU
+16,Norway,EU
+17,Finland,EU
+18,USA,USA
+19,Switzerland,EU
+20,Chile,Others
+21,Romania,Others
+22,Poland,Poland
+23,Korea,Others
+24,Iran,Others
+25,Indonesia,Southeast Asian
+26,Hungary,Others
+27,Bolivia,Others
+28,Portugal,Portugal
+29,Bulgaria,Others
+30,Syria,Others
+31,Czech Republic,Others
+32,Russia,Russia
+33,Kurdistan,Middle East
+34,Mexico,Others
+35,Argentina,Others
+36,Cap Verde Is.,Others
+37,Benin,Others
+38,Philippines,Southeast Asian
+39,Israel,Others
+40,Japan,Others
+41,Australia,Others
+42,India,Others
+43,Afghanistan,Middle East
+44,Thailand,Southeast Asian
+45,Jamaica,Others
+46,Saudi Arabia,Middle East
+47,Ethiopia,African
+48,Columbia,Others
+49,Ghana,African
+50,Bangladesh,Others
+51,Venezuela,Others
+52,Tunisia,Others
+53,Mauritius,Others
+54,Nigeria,African
+55,Canada,Others
+56,New Zealand,Others
+57,Tanzania,African
+58,Cyprus,Middle East
+59,Cuba,Others
+60,Iraq,Middle East
+61,Brazil,Others
+62,Monaco,Others
+63,Hong Kong,Others
+64,Peru,Others
+65,Sri Lanka,Others
+66,Nepal,Others
+67,Morocco,African
+68,China,Others
+69,Liechtenstein,Others
+70,Iceland,Others
+71,Ireland,Others
+72,St. Lucia,Others
+73,Moldavia,Others
+74,Kazakhstan,Others
+75,Albania,Others
+76,Lebanon,Middle East
+77,Kyrgyzstan,Others
+78,Ukraine,Others
+79,Algeria,African
+80,Mozambique,African
+81,Egypt,African
+82,Tajikistan,Others
+83,Vietnam,Southeast Asian
+84,Somalia,African
+85,Pakistan,Others
+86,South Africa,African
+87,UAE,Middle East
+88,El Salvador,Others
+89,Eritrea,Others
+90,Jordan,Others
+91,Turkmenistan,Others
+92,Costa Rica,Others
+93,Singapore,Southeast Asian
+94,Burkina Faso,Others
+95,Zambia,African
+96,Ecuador,Others
+97,Uzbekistan,Others
+98,No Nationality,Others
+99,Puerto Rico,Others
+100,Laos,Southeast Asian
+101,Estonia,Eastern Europe
+102,Angola,African
+103,Latvia,Eastern Europe
+104,Malaysia,Southeast Asian
+105,Namibia,African
+106,Montenegro,Others
+107,Belize,Others
+108,Dominican Republic,Others
+109,Nicaragua,Others
+110,Kenya,African
+111,Libya,African
+112,Malta,EU
+113,Botswana,African
+114,Haiti,Others
+115,Trinidad-Tobago,Others
+116,Luxembourg,EU
+117,Belgium,EU
+118,The Netherlands,EU
+119,Croatia,Former Yugo
+120,Bosnia-Herzegovina,Former Yugo
+121,Macedonia,Former Yugo
+122,Slovenia,Former Yugo
+123,Slovakia,Others
+124,Paraguay,Others
+125,Guinea,African
+126,Kuwait,Middle East
+127,Ivory Coast,African
+128,Malaysia,Southeast Asian
+129,Samoa,Others
+130,Azerbaijan,Eastern Europe
+131,Seychelles,Others
+132,Belarus,Eastern Europe
+133,Uruguay,Others
+134,Bahamas,Others
+135,Uganda,African
+136,Oman,Middle East
+137,Micronesia,Others
+138,Mali,African
+139,Cameroon,African
+140,Kosovo-Albania,Former Yugo
+141,Georgia,Eastern Europe
+142,Sudan,African
+143,Congo,African
+144,Togo,African
+145,Mongolia,Others
+146,Lithuania,EU
+147,Chad,African
+148,Armenia,Eastern Europe
+149,Kurdistan,Middle East
+150,Liberia,African
+151,Yemen,Middle East
+152,Palestine,Middle East
+153,The Free State of Gdansk,Others
+154,Taiwan,Others
+155,Turkmenistan,Others
+156,Africa,African
+157,Guatemala,Others
+158,Sierra Leone (West Africa),African
+159,Panama,Others
+160,East Timor,Southeast Asian
+161,Bahrain,Middle East
+162,Senegal,African
+163,Maldives,Others
+164,Hawaii,Others
+165,Serbia,Former Yugo
+166,Gambia,African
+167,Honduras,Others
+168,Montenegro,Former Yugo
+169,Cambodia,Southeast Asian
+170,Surinam,Others
+171,Guyana,Others
+172,Caucasus,Eastern Europe
+173,Zimbabwe,African
+174,Madagascar,African
+175,Grenada,Others
+176,Lesotho,African
+177,Bhutan,Others
+178,Rwanda,African
+179,Malawi,African
+180,Bessarabia,Others
+181,Myanmar,Southeast Asian
+183,Niger,African
+222,Eastern Europe,Eastern Europe
+333,Other Unspecified Foreign Country,Others
