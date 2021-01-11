@@ -107,7 +107,7 @@ soc_skills <- ls(pattern = "language_") %>%
   select(-c(Code, Occupation))
 
 ## ISCO Language Skills
-isco_skills <- left_join(crosswalk, soc_skills) %>% View()
+isco_skills <- left_join(crosswalk, soc_skills) %>%
   group_by(isco08) %>%
   summarise(across(matches("_"), median)) %>%
   rowwise() %>%
