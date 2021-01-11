@@ -91,7 +91,7 @@ language_proficiency <- read_csv("English_Language.csv") %>%
   mutate(across(matches("_"), as.numeric))
 
 # SOC-10 -> ISCO Crosswalk
-crosswalk <- read_dta("onetsoc_to_isco_cws_ibs/soc10_isco08.dta")
+crosswalk <- read_dta("soc10_isco08.dta")
 
 # ISCO-88 -> ISCO-08
 isco_reclassification <- read_excel("index08-draft.xlsx") %>%
@@ -142,7 +142,17 @@ isco_skills <- left_join(crosswalk, soc_skills) %>%
     x4_skill1 = xtile(skill1, n = 4),
     x4_skill2 = xtile(skill2, n = 4)) %>%
   select(isco08, matches("skill"), -matches("(importance)|(level)")) %>%
-  rename(isco = isco08)
+  rename(isco = isco08) %>%
+  mutate(
+    isco_modified = case_when(
+      between(isco, 0, 999) ~ NA_integer_, #Delete Military
+      isco_skill == 1 ~ 1L, #Elementary
+      isco_skill == 3 ~ 4L, #Technicians
+      isco_skill == 4 ~ 5L, #Professionals
+      isco_skill == 2 & isco >= 6000 ~ 3L, #Blue-Collar
+      isco_skill == 2 & isco < 6000 ~ 4L #White-Collar
+      )
+    )
 
 ## Household information
 # Location
@@ -349,3 +359,42 @@ dataset <- pgen %>%
   select(-starts_with("bssch"))
 
 write.csv2(dataset, "full_data_0601.csv")
+
+### TEMPORARY CODE
+
+
+
+first_group <- dataset %>% 
+  filter(age == 35)
+
+second_group <- dataset %>% 
+  filter(age == 36)
+
+third_group <- dataset %>% 
+  filter(age == 34)
+
+test <- second_group %>%
+  group_by(pid) %>%
+  arrange(age) %>%
+  mutate(n = n()) %>%
+  filter(n > 2) %>%
+  arrange(n)
+
+summarise(across(everything(), ))
+
+select_second <- function(x) {
+  if (length(x) == 1) return(x)
+  if (length(x) > 1)  return(x[2])
+}
+
+
+%>% 
+  filter(age == 35, isco != 0) %>%
+  mutate(isco = if_else(nchar(isco) == 3, paste0("0", isco), as.character(isco)),
+         isco_major = str_sub(isco, 1, 1),
+         isco_minor = str_sub(isco, 1, 2))
+
+ggplot(dataset) + geom_bar(aes(x=isco_major))
+ggplot(dataset) + geom_bar(aes(x=isco_minor))
+
+ggplot(dataset) + geom_bar(aes(x=female)) + facet_grid(. ~ isco_skill)
