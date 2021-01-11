@@ -62,6 +62,35 @@ drop_inconsistent <- function(x) {
     }
 }
 
+select_second <- function(x) {
+  if (length(x) == 1) return(x)
+  if (length(x) > 1)  return(x[2])
+}
+
+select_nonrepeated_ids <- function(data, variable, condition, id_var, distance = 1) {
+  condition %<>% paste(variable, .)
+  ids <- data %>%
+    filter(!! rlang::parse_expr(condition)) %>%
+    select(!!id_var)
+  upper_condition <- paste0(condition, " + ", distance)
+  lower_condition <- paste0(condition, " - ", distance)
+  upper_group <- data %>%
+    filter(!! rlang::parse_expr(upper_condition)) %>%
+    anti_join(ids)
+  lower_group <- data %>%
+    filter(!! rlang::parse_expr(lower_condition)) %>%
+    anti_join(ids)
+  appendix <- bind_rows(upper_group, lower_group) %>%
+    group_by_at(id_var) %>%
+    arrange(!!variable) %>%
+    summarise(across(everything(), select_second))
+  return(appendix)
+}
+
+double_anti_join <- function(x, y, by) {
+  bind_rows(anti_join(x, y, by = by), anti_join(y, x, by = by))
+}
+
 ### Data
 ## Classifications
 # Language/Culture distances
@@ -145,11 +174,10 @@ isco_skills <- left_join(crosswalk, soc_skills) %>%
   rename(isco = isco08) %>%
   mutate(
     isco_modified = case_when(
-      between(isco, 0, 999) ~ NA_integer_, #Delete Military
       isco_skill == 1 ~ 1L, #Elementary
       isco_skill == 3 ~ 4L, #Technicians
       isco_skill == 4 ~ 5L, #Professionals
-      isco_skill == 2 & isco >= 6000 ~ 3L, #Blue-Collar
+      (isco_skill == 2 & isco >= 6000) | isco == 210 ~ 3L, #Blue-Collar
       isco_skill == 2 & isco < 6000 ~ 4L #White-Collar
       )
     )
@@ -206,7 +234,7 @@ ppath <- read_csv("ppath.csv") %>%
   filter(!is.na(corigin), !is.na(culture)) %>%
   mutate(
     culture = case_when(
-      culture.mother == 1 & culture.father == 1 ~ 1L, # Either parents is German
+      culture.mother == 1 & culture.father == 1 ~ 1L, # Both parents is German
       is.na(culture.mother) & is.na(culture.father) ~ culture, # Missing parental Info, then personal Info
       is.na(culture.mother) ~ culture.father, # Missing mothers Culture, then fathers Culture
       is.na(culture.father) ~ culture.mother, # Missing fathers Culture, then mothers Culture
@@ -227,10 +255,12 @@ ppath <- read_csv("ppath.csv") %>%
       is.na(loc1989) & (birthregion %in% c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10)) ~ 0L,
       is.na(loc1989) ~ NA_integer_
     )
-  ) %>%  
-  select(cid, pid, female, gebjahr, todjahr, immiyear, migback, arefback, migration_age, 
-         germborn, east_birth, german_birth, culture, culture2, hybrid, matches("language"),
-         -matches("language_distance\\...ther"), locchildh)
+  ) 
+
+  # %>%  
+  # select(cid, pid, female, gebjahr, todjahr, immiyear, migback, arefback, migration_age, 
+  #        germborn, east_birth, german_birth, culture, culture2, hybrid, matches("language"),
+  #        -matches("language_distance\\...ther"), locchildh)
 
 # Immigration information
 bioimmig <- read_csv("bioimmig.csv") %>%
@@ -275,15 +305,15 @@ pgen <- read_csv("pgen.csv") %>%
   mutate(across(where(is.numeric), ~ ifelse(.x < 0, NA, .x))) %>%
   group_by(pid) %>%
   mutate(
-    occupation_group = case_when(
-      pgstib %in% c(11, 110, 120, 130, 140, 150) ~ 1L, # Student
-      pgstib %in% c(210, 220, 310, 510, 520, 521, 522, 610) ~ 2L, # Unskilled
-      pgstib %in% c(230, 240, 250, 320, 330, 340, 420, 421, 422, 423, 530, 540, 550, 620, 630, 640) ~ 3L, # Skilled
-      pgstib %in% c(410, 411, 412, 413, 430, 431, 432, 433) ~ 4L, # Self-employed
-      pgstib %in% c(10, 12, 440) ~ 5L, # Home
-      pgstib %in% c(15) ~ 6L, # Military
-      pgstib %in% c(13) ~ 7L # Retired
-    ),
+    # occupation_group = case_when(
+    #   pgstib %in% c(11, 110, 120, 130, 140, 150) ~ 1L, # Student
+    #   pgstib %in% c(210, 220, 310, 510, 520, 521, 522, 610) ~ 2L, # Unskilled
+    #   pgstib %in% c(230, 240, 250, 320, 330, 340, 420, 421, 422, 423, 530, 540, 550, 620, 630, 640) ~ 3L, # Skilled
+    #   pgstib %in% c(410, 411, 412, 413, 430, 431, 432, 433) ~ 4L, # Self-employed
+    #   pgstib %in% c(10, 12, 440) ~ 5L, # Home
+    #   pgstib %in% c(15) ~ 6L, # Military
+    #   pgstib %in% c(13) ~ 7L # Retired
+    # ),
     across(where(is.numeric), ~ ifelse(.x < 0, NA, .x)),
     education_east = ifelse(pgpsbilo > 0 | pgpbbilo > 0, 1L, 0L),
     education_abroad = ifelse(pgpsbila > 0 | pgpbbila > 0, 1L, 0L),
@@ -358,43 +388,18 @@ dataset <- pgen %>%
   ) %>%
   select(-starts_with("bssch"))
 
-write.csv2(dataset, "full_data_0601.csv")
+write.csv2(dataset, "full_data_1101.csv")
 
-### TEMPORARY CODE
+filtered_dataset <- 
+  map(rev(seq(1:5)),
+      select_nonrepeated_ids,
+      data = dataset,
+      variable = "age",
+      condition = "== 35",
+      id_var = "pid"
+      ) %>%
+  reduce(double_anti_join, by = "pid") %>%
+  bind_rows(dataset %>% filter(age == 35)) %>%
+  group_by(culture)
 
-
-
-first_group <- dataset %>% 
-  filter(age == 35)
-
-second_group <- dataset %>% 
-  filter(age == 36)
-
-third_group <- dataset %>% 
-  filter(age == 34)
-
-test <- second_group %>%
-  group_by(pid) %>%
-  arrange(age) %>%
-  mutate(n = n()) %>%
-  filter(n > 2) %>%
-  arrange(n)
-
-summarise(across(everything(), ))
-
-select_second <- function(x) {
-  if (length(x) == 1) return(x)
-  if (length(x) > 1)  return(x[2])
-}
-
-
-%>% 
-  filter(age == 35, isco != 0) %>%
-  mutate(isco = if_else(nchar(isco) == 3, paste0("0", isco), as.character(isco)),
-         isco_major = str_sub(isco, 1, 1),
-         isco_minor = str_sub(isco, 1, 2))
-
-ggplot(dataset) + geom_bar(aes(x=isco_major))
-ggplot(dataset) + geom_bar(aes(x=isco_minor))
-
-ggplot(dataset) + geom_bar(aes(x=female)) + facet_grid(. ~ isco_skill)
+write.csv2(filtered_dataset, "filtered_data_1101.csv")
