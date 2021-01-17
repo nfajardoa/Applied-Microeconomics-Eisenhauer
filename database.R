@@ -1,7 +1,7 @@
 ### PACKAGES LOADING AND INSTALLATION
 
 ## Set directory
-setwd("Documents/MSc Bonn/Applied Micro/SOEP")
+#setwd("Documents/MSc Bonn/Applied Micro/SOEP")
 
 ## Package names
 packages <- c("haven", "dplyr", "DBI", "dbplyr", "purrr", "readxl", "glue", 
@@ -40,13 +40,13 @@ plot_timecols <- function(data, time, variable, row_vars, col_vars, save = TRUE,
     count(name = "obs") %>%
     group_by_at(grouping %>% str_subset(variable, negate = TRUE)) %>%
     mutate(percentage = (obs / sum(obs)) * 100)
-
+  
   formula <- as.formula(paste(paste(row_vars, collapse = "+"), "~", paste(col_vars, collapse = "+")))
   plot <- ggplot(groups) +
     geom_col(aes_string("percentage", x = time, fill = variable)) +
     facet_grid(formula) +
     theme_minimal()
-
+  
   if (save == TRUE) {
     name <- paste(variable, time, paste0(row_vars, collapse = "_"), paste0(col_vars, collapse = "_"), sep = "_")
     ggsave(paste0(name, ".png"), plot, ...)
@@ -59,7 +59,7 @@ drop_inconsistent <- function(x) {
     return(x)
   } else {
     return(NA)  
-    }
+  }
 }
 
 select_second <- function(x) {
@@ -95,15 +95,10 @@ double_anti_join <- function(x, y, by) {
 ## Classifications
 # Language/Culture distances
 culture_language <- read_csv("language_distance.csv") %>%
-  select(-variable, -label) %>%
-  rename(
-    corigin = value,
-    language_distance = ldnd
-  ) %>%
+  select(corigin, language_distance, culture, ronen_shenkar) %>%
   mutate(across(c(1, 3, 4), as.integer),
-    x10_language_distance = xtile(language_distance, 10),
-    x5_language_distance = xtile(language_distance, 5),
-    x4_language_distance = xtile(language_distance, 4)
+         language_distance = (language_distance - min(language_distance, na.rm = TRUE)) / (max(language_distance, na.rm = TRUE) - min(language_distance, na.rm = TRUE)) * 100,
+         x10_language_distance = xtile(language_distance, 10) %>% as.factor(),
   )
 
 # O*NET Job Skills
@@ -177,10 +172,10 @@ isco_skills <- left_join(crosswalk, soc_skills) %>%
       isco_skill == 1 ~ 1L, #Elementary
       isco_skill == 3 ~ 4L, #Technicians
       isco_skill == 4 ~ 5L, #Professionals
-      (isco_skill == 2 & isco >= 6000) | isco == 210 ~ 3L, #Blue-Collar
-      isco_skill == 2 & isco < 6000 ~ 4L #White-Collar
-      )
+      (isco_skill == 2 & isco >= 6000) | isco == 210 ~ 2L, #Blue-Collar
+      isco_skill == 2 & isco < 6000 ~ 3L #White-Collar
     )
+  )
 
 ## Household information
 # Location
@@ -191,7 +186,7 @@ hbrutto <- read_csv("hbrutto.csv") %>%
   distinct() %>%
   group_by(cid, year) %>%
   summarise(across(everything(), drop_inconsistent))
-  
+
 ## Bio/Migrant information
 # Parental information
 bioparen <- read_csv("bioparen.csv") %>%
@@ -230,7 +225,8 @@ ppath <- read_csv("ppath.csv") %>%
   left_join(culture_language %>% rename(morigin = corigin), by = "morigin") %>%
   left_join(culture_language %>% rename(forigin = corigin), suffix = c(".mother", ".father"), by = "forigin") %>%
   left_join(culture_language, by = "corigin") %>%
-  mutate(hybrid = if_else(culture.father == culture.mother, 0, 1)) %>%
+  mutate(hybrid = if_else(culture.father == culture.mother, 0, 1),
+         hybrid_rs = if_else(ronen_shenkar.father == ronen_shenkar.mother, 0, 1)) %>%
   filter(!is.na(corigin), !is.na(culture)) %>%
   mutate(
     culture = case_when(
@@ -241,8 +237,17 @@ ppath <- read_csv("ppath.csv") %>%
       culture.mother == culture.father ~ culture.mother, # Same parental Culture
       culture.mother != culture.father ~ 0L # Hybrid id
     ),
-    language_cost = if_else(migback %in% c(1, 2), min(language_distance.mother, language_distance.father, language_distance, na.rm = TRUE), language_distance),
-    language_cost = if_else(migback == 3, min(language_distance.mother, language_distance.father, na.rm = TRUE), language_distance),
+    ronen_shenkar = case_when(
+      ronen_shenkar.mother == 1 & ronen_shenkar.father == 1 ~ 1L, # Both parents is German
+      is.na(ronen_shenkar.mother) & is.na(ronen_shenkar.father) ~ ronen_shenkar, # Missing parental Info, then personal Info
+      is.na(ronen_shenkar.mother) ~ ronen_shenkar.father, # Missing mothers ronen_shenkar, then fathers ronen_shenkar
+      is.na(ronen_shenkar.father) ~ ronen_shenkar.mother, # Missing fathers ronen_shenkar, then mothers ronen_shenkar
+      ronen_shenkar.mother == ronen_shenkar.father ~ ronen_shenkar.mother, # Same parental ronen_shenkar
+      ronen_shenkar.mother != ronen_shenkar.father ~ 0L # Hybrid id
+    ),
+    language_cost = min(language_distance.mother, language_distance.father, language_distance, na.rm = TRUE) %>% ifelse(. == Inf, NA, .),
+    #language_cost = if_else(migback %in% c(1, 2), min(language_distance.mother, language_distance.father, language_distance, na.rm = TRUE), language_distance),
+    #language_cost = if_else(migback == 3, min(language_distance.mother, language_distance.father, na.rm = TRUE), language_distance),
     migback = case_when(
       migback == 2 & migration_age <= 7 ~ 3L,
       migback == 1 & culture != 1 ~ 3L,
@@ -257,10 +262,10 @@ ppath <- read_csv("ppath.csv") %>%
     )
   ) 
 
-  # %>%  
-  # select(cid, pid, female, gebjahr, todjahr, immiyear, migback, arefback, migration_age, 
-  #        germborn, east_birth, german_birth, culture, culture2, hybrid, matches("language"),
-  #        -matches("language_distance\\...ther"), locchildh)
+# %>%  
+# select(cid, pid, female, gebjahr, todjahr, immiyear, migback, arefback, migration_age, 
+#        germborn, east_birth, german_birth, culture, culture2, hybrid, matches("language"),
+#        -matches("language_distance\\...ther"), locchildh)
 
 # Immigration information
 bioimmig <- read_csv("bioimmig.csv") %>%
@@ -388,7 +393,7 @@ dataset <- pgen %>%
   ) %>%
   select(-starts_with("bssch"))
 
-write.csv2(dataset, "full_data_1101.csv")
+write.csv2(dataset, "full_data_1601.csv")
 
 filtered_dataset <- 
   map(rev(seq(1:5)),
@@ -397,9 +402,23 @@ filtered_dataset <-
       variable = "age",
       condition = "== 35",
       id_var = "pid"
-      ) %>%
+  ) %>%
   reduce(double_anti_join, by = "pid") %>%
   bind_rows(dataset %>% filter(age == 35)) %>%
   group_by(culture)
 
-write.csv2(filtered_dataset, "filtered_data_1101.csv")
+write_csv(filtered_dataset, "filtered_data_1601.csv")
+
+filtered_dataset <- 
+  map(rev(seq(1:10)),
+      select_nonrepeated_ids,
+      data = dataset,
+      variable = "age",
+      condition = "== 40",
+      id_var = "pid"
+  ) %>%
+  reduce(double_anti_join, by = "pid") %>%
+  bind_rows(dataset %>% filter(age == 40)) %>%
+  group_by(culture)
+
+write_csv(filtered_dataset, "filtered_data_1601_2.csv")
