@@ -1,7 +1,7 @@
 ### PACKAGES LOADING AND INSTALLATION
 
 ## Set directory
-#setwd("Documents/MSc Bonn/Applied Micro/SOEP")
+setwd("Documents/MSc Bonn/Applied Micro/SOEP")
 
 ## Package names
 packages <- c("haven", "dplyr", "DBI", "dbplyr", "purrr", "readxl", "glue", 
@@ -115,14 +115,16 @@ language_proficiency <- read_csv("English_Language.csv") %>%
   mutate(across(matches("_"), as.numeric))
 
 # SOC-10 -> ISCO Crosswalk
-crosswalk <- read_dta("soc10_isco08.dta")
+crosswalk <- read_dta("soc10_isco08.dta") %>%
+  add_case(soc10 = NA, isco08 = 3330)
 
 # ISCO-88 -> ISCO-08
 isco_reclassification <- read_excel("index08-draft.xlsx") %>%
   mutate(across(1:2, as.numeric)) %>%
   group_by(isco88) %>%
   summarise(across(everything(), list)) %>%
-  mutate(isco08 = map_dbl(isco08, min))
+  mutate(isco08 = map_dbl(isco08, min)) %>%
+  filter(isco88 != 100)
 
 soc_skills <- ls(pattern = "language_") %>%
   map(~ parse(text = .x) %>% eval()) %>%
@@ -163,8 +165,8 @@ isco_skills <- left_join(crosswalk, soc_skills) %>%
   mutate(
     skill1 = (skill1 - min(skill1)) / (max(skill1) - min(skill1)) * 100,
     skill2 = (skill2 - min(skill2)) / (max(skill2) - min(skill2)) * 100,
-    x4_skill1 = xtile(skill1, n = 4),
-    x4_skill2 = xtile(skill2, n = 4)) %>%
+    x5_skill1 = xtile(skill1, n = 5),
+    x5_skill2 = xtile(skill2, n = 5)) %>%
   select(isco08, matches("skill"), -matches("(importance)|(level)")) %>%
   rename(isco = isco08) %>%
   mutate(
@@ -190,8 +192,25 @@ hbrutto <- read_csv("hbrutto.csv") %>%
 ## Bio/Migrant information
 # Parental information
 bioparen <- read_csv("bioparen.csv") %>%
-  select(cid, pid, locchildh, fnat, mnat, morigin, forigin) %>%
-  mutate(across(where(is.numeric), ~ ifelse(.x < 0, NA, .x)))
+  select(cid, pid, locchildh, fnat, mnat, morigin, forigin, misco88, misco08, fisco88, fisco08, locchild1) %>%
+  left_join(isco_reclassification %>% select(-name) %>% rename(fisco88 = isco88), by = "fisco88") %>%
+  left_join(isco_reclassification %>% select(-name) %>% rename(misco88 = isco88), by = "misco88", suffix = c("_father", "_mother")) %>%
+  mutate(across(where(is.numeric), ~ ifelse(.x < 0, NA, .x)),
+         fisco = case_when(
+           !is.na(fisco08) ~ as.integer(fisco08),
+           is.na(fisco08) & !is.na(isco08_father) ~ as.integer(isco08_father),
+           TRUE ~ NA_integer_
+           ),
+         misco = case_when(
+           !is.na(misco08) ~ as.integer(misco08),
+           is.na(misco08) & !is.na(isco08_mother) ~ as.integer(isco08_mother),
+           TRUE ~ NA_integer_
+         )
+         ) %>%
+  left_join(isco_skills %>% rename(fisco = isco), by = "fisco") %>%
+  left_join(isco_skills %>% rename(misco = isco), by = "misco", suffix = c("_father", "_mother")) %>%
+  rename(stayed_home = locchild1, location_childhood = locchildh) %>%
+  dplyr::select(-matches("(^.isco.8)|(^isco08_..ther)"))
 
 # Tracking information
 ppath <- read_csv("ppath.csv") %>%
@@ -246,13 +265,12 @@ ppath <- read_csv("ppath.csv") %>%
       ronen_shenkar.mother != ronen_shenkar.father ~ 0L # Hybrid id
     ),
     language_cost = min(language_distance.mother, language_distance.father, language_distance, na.rm = TRUE) %>% ifelse(. == Inf, NA, .),
-    #language_cost = if_else(migback %in% c(1, 2), min(language_distance.mother, language_distance.father, language_distance, na.rm = TRUE), language_distance),
-    #language_cost = if_else(migback == 3, min(language_distance.mother, language_distance.father, na.rm = TRUE), language_distance),
     migback = case_when(
       migback == 2 & migration_age <= 7 ~ 3L,
       migback == 1 & culture != 1 ~ 3L,
       TRUE ~ as.integer(migback)
     ),
+    language_cost = if_else(migback == 3, 0, language_distance),
     east_birth = case_when(
       loc1989 == 1 ~ 1L,
       loc1989 > 1 ~ 0L,
@@ -362,7 +380,8 @@ pgen <- read_csv("pgen.csv") %>%
   unnest(data) %>%
   left_join(isco_skills) %>%
   filter(!is.na(isco), !is.na(female)) %>%
-  mutate(age = year - gebjahr)
+  mutate(age = year - gebjahr,
+         german = if_else(german == 1, 1, 0))
 
 # #Duration of stay
 # stay <- bioimmig %>% select(pid, cid, syear, biresper) %>% filter(biresper > 0) %>%
@@ -393,21 +412,7 @@ dataset <- pgen %>%
   ) %>%
   select(-starts_with("bssch"))
 
-write.csv2(dataset, "full_data_1601.csv")
-
-filtered_dataset <- 
-  map(rev(seq(1:5)),
-      select_nonrepeated_ids,
-      data = dataset,
-      variable = "age",
-      condition = "== 35",
-      id_var = "pid"
-  ) %>%
-  reduce(double_anti_join, by = "pid") %>%
-  bind_rows(dataset %>% filter(age == 35)) %>%
-  group_by(culture)
-
-write_csv(filtered_dataset, "filtered_data_1601.csv")
+write_csv(dataset, "full_data_2401.csv")
 
 filtered_dataset <- 
   map(rev(seq(1:10)),
@@ -421,4 +426,40 @@ filtered_dataset <-
   bind_rows(dataset %>% filter(age == 40)) %>%
   group_by(culture)
 
-write_csv(filtered_dataset, "filtered_data_1601_2.csv")
+write_csv(filtered_dataset, "filtered_data_2401_everyone.csv")
+
+dataset_employees <- dataset %>% filter(isco != 0)
+
+filtered_dataset <- 
+  map(rev(seq(1:10)),
+      select_nonrepeated_ids,
+      data = dataset_employees,
+      variable = "age",
+      condition = "== 40",
+      id_var = "pid"
+  ) %>%
+  reduce(double_anti_join, by = "pid") %>%
+  bind_rows(dataset_employees %>% filter(age == 40)) %>%
+  group_by(culture)
+
+write_csv(filtered_dataset, "filtered_data_2401_nounemployed.csv")
+
+dataset %<>% filter(isco != 0, between(age, 30, 50))
+
+isco_skill <- dataset %>% group_by(pid) %>%
+  filter(isco_skill == max(isco_skill)) %>%
+  filter(row_number()==n())
+
+write_csv(isco_skill, "filtered_data_2501_iscoskill.csv", na = ".")
+
+language_skill1 <- dataset %>% group_by(pid) %>%
+  filter(isco_skill == max(isco_skill)) %>%
+  filter(row_number()==n())
+
+write_csv(language_skill1, "filtered_data_2501_language_skill1.csv", na = ".")
+
+language_skill2 <- dataset %>% group_by(pid) %>%
+  filter(isco_skill == max(isco_skill)) %>%
+  filter(row_number()==n())
+
+write_csv(language_skill2, "filtered_data_2501_language_skill2.csv", na = ".")
