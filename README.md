@@ -1,6 +1,4 @@
-# Research Project in occupational choice
- 
-## Introduction about project
+# Occupational Choice
 
 Occupational decisions are multidimensional and follow a complex mechanism. A huge literature show that, in choosing among many occupations, a worker will choose occupations to maximize the discounted present value of potential lifetime work time and education enables one to move up the job scale (Schmidt and Strauss 1975, Boskin 1974). However, other notable aspect of education choice is the role of self-selection, the uncertainty of education outcomes and labor market, signiﬁcant heterogeneity among individuals in social, economic, and cultural background. Multiple studies have documented the dis-  parities between immigrants and the natives in the host countries, it is often shown that immigrants from developing or war-torn countries and former colonies tend to lag behind the majority population in terms of educational levels, employment rates, and earnings. While their descendants typically do better, members of the so-called “second generation” also tend to lag behind socioeconomically, despite having been exposed to the same cultural values, educational system, and institutional context as their majority-descendent peers. In view of the general interest in intergenerational mobility, the next section will present background material and review the most important literature on how intergenerational transmission aﬀect the career decision of natives and immigrants 
 
